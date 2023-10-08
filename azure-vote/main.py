@@ -32,7 +32,8 @@ config_integration.trace_integrations(['requests'])
 logger = logging.getLogger(__name__)
 
 handler = AzureLogHandler(connection_string='InstrumentationKey=ec27e55c-ac9c-4a87-906f-6d2e2f100ff2')
-handler.setFormatter(logging.Formatter('%(traceId)s %(spanId)s %(message)s'))
+# handler.setFormatter(logging.Formatter('%(traceId)s %(spanId)s %(message)s'))
+handler.setFormatter(logging.Formatter('%(message)s'))
 logger.addHandler(handler)
 
 logger.addHandler(AzureEventHandler(connection_string='InstrumentationKey=ec27e55c-ac9c-4a87-906f-6d2e2f100ff2'))
@@ -103,8 +104,8 @@ def index():
 
         vote2 = r.get(button2).decode('utf-8')
         # TODO: use tracer object to trace dog vote
-        with tracer.span(name="Cats Vote") as span:
-            print("Cats Vote")
+        with tracer.span(name="Dogs Vote") as span:
+            print("Dogs Vote")
 
         # Return index with values
         return render_template("index.html", value1=int(vote1), value2=int(vote2), button1=button1, button2=button2, title=title)
